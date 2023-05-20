@@ -52,13 +52,9 @@ class Category:
         else :
             return True
 
-    
-
-    
-
-
-
 categories = []
+
+
 
 # TESTING :D
 bum = Category('Food')
@@ -66,18 +62,31 @@ bum = Category('Food')
 bum.deposit(10, 'alle')
 bum.deposit(20, 'kink')
 #bum.withdraw(40, 'ales')
-print(bum.get_balance())
+
 
 bim = Category('Clothes')
 
 bim.deposit(50, 'krrr')
 bim.deposit(70, 'skk')
-#bim.withdraw(40, 'ales')
+bim.withdraw(40, 'ales')
 bim.transfer(20, 'Food')
-print(bim.get_balance())
-print(bim.ledger)
-print(bum.ledger)
+
 
 #print(categories[0].ledger)
 
-#def create_spend_chart(categories):
+def create_spend_chart(categories):
+
+    for category in categories :
+        category_name = category.category
+        this_category_expences = 0
+        print(category_name) 
+        print(category.ledger)
+
+        i = 0
+        for a in category.ledger :
+            if category.ledger[i]['amount'] < 0 :
+                this_category_expences += category.ledger[i]['amount']
+            i += 1
+
+        print(f'we spent {this_category_expences} on {category_name}')
+create_spend_chart(categories)
