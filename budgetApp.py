@@ -75,6 +75,11 @@ funnyStuff = Category('Funny stuff I like')
 funnyStuff.deposit(100, 'pocket')
 funnyStuff.withdraw(50, 'supid')
 
+brum = Category('sweeeets')
+brum.deposit(60, 'mommy')
+brum.withdraw(30, 'candies')
+print(categories[0].ledger)
+print(categories[1].ledger)
 
 #print(categories[0].ledger)
 
@@ -116,8 +121,6 @@ def create_spend_chart(categories):
         expences[j].percent = percent
         j += 1
 
-    print(expences[1].percent, '%' )
-    print(expences[0].on_what[0])
 
     # ------ Printout -----
     
@@ -136,7 +139,7 @@ def create_spend_chart(categories):
                 to_print += ' o '
             else :
                 to_print += '   '
-        print(f'{pref} {start_value}| {to_print}')
+        print(f'{pref} {start_value}|{to_print}')
         start_value -= 10
 
 
@@ -149,29 +152,23 @@ def create_spend_chart(categories):
     longest_cat = []
     for exp in expences :
         longest_cat.append(len(exp.on_what))
-    print('longest category',max(longest_cat))
+    print('    ','-' * ((len(categories) * 3) + 1))
 
-    to_print = ''
+    i = 0
     while b < max(longest_cat): 
-        i = 0
         
+        to_print = '      '
 
         for exp in expences :
-            to_print += exp.on_what[i]
-            i += 1
+            try :
+                to_print += f'{exp.on_what[i]}  '
+            except IndexError :
+                to_print += '   '
+            
         print(to_print)
-        to_print = ''
+        i += 1
         b += 1
         
-        '''
-        try :
-            print(expences[a].on_what[b], expences[a+1].on_what[b], expences[a+2].on_what[b])
-            b += 1
-        except IndexError:
-            print(' ', expences[a+1].on_what[b], expences[a+2].on_what[b])
-            b +=1
-
-            '''
 
 
 
