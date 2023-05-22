@@ -64,14 +64,16 @@ bum.deposit(10, 'alle')
 bum.deposit(20, 'kink')
 bum.withdraw(10, 'ales')
 
-
-
 bim = Category('Clothes')
 
 bim.deposit(50, 'krrr')
 bim.deposit(70, 'skk')
 bim.withdraw(40, 'ales')
 bim.transfer(20, 'Food')
+
+funnyStuff = Category('Funny stuff I like')
+funnyStuff.deposit(100, 'pocket')
+funnyStuff.withdraw(50, 'supid')
 
 
 #print(categories[0].ledger)
@@ -123,39 +125,53 @@ def create_spend_chart(categories):
 
     start_value = 100
     while start_value >= 0 :
-        if expences[1].percent >= start_value :
-            print(f'{start_value}| o')
-        else :
-            print(f'{start_value}|  ')
+        to_print = ''
+        pref = ''
+        if 0 < start_value < 100 :
+            pref += ' '
+        elif start_value == 0 :
+            pref += '  '
+        for exp in expences :
+            if exp.percent >= start_value :
+                to_print += ' o '
+            else :
+                to_print += '   '
+        print(f'{pref} {start_value}| {to_print}')
         start_value -= 10
-
-
-
-
-
 
 
 
     # ----- Print categories ------
     a = 0
     b = 0
+    
+    # find longest category before printing
+    longest_cat = []
+    for exp in expences :
+        longest_cat.append(len(exp.on_what))
+    print('longest category',max(longest_cat))
 
-    while b < len(expences[1].on_what): # find longest category before printing
+    to_print = ''
+    while b < max(longest_cat): 
+        i = 0
+        
+
+        for exp in expences :
+            to_print += exp.on_what[i]
+            i += 1
+        print(to_print)
+        to_print = ''
+        b += 1
+        
+        '''
         try :
-            print(expences[a].on_what[b], expences[a+1].on_what[b])
+            print(expences[a].on_what[b], expences[a+1].on_what[b], expences[a+2].on_what[b])
             b += 1
         except IndexError:
-            print(' ', expences[a+1].on_what[b])
+            print(' ', expences[a+1].on_what[b], expences[a+2].on_what[b])
             b +=1
-'''
-    print(expences[0].on_what[0], expences[1].on_what[0])
-    print()
-    print(expences[0].on_what[1], expences[1].on_what[1]) 
-    print() 
-    print(expences[0].on_what[2], expences[1].on_what[2]) 
-    print() 
-'''
-            
+
+            '''
 
 
 
