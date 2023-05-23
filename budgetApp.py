@@ -8,13 +8,11 @@ class Category:
     def deposit(self, amount, description = '') :
         self.ledger.append({"amount": amount, "description": description})
 
-
-
     def withdraw(self, amount, description = '') :
         amount = amount
         # calculations for possibility of withdraw (enough money)
         if self.check_funds(amount) == False :
-            print('not enough founds')
+         #   print('not enough founds')
             return False
         else :
             self.ledger.append({"amount": -amount, "description": description})
@@ -31,7 +29,7 @@ class Category:
     def transfer(self, amount, category) :
 
         if self.check_funds(amount) == False :
-            print('not enough founds')
+          #  print('not enough founds')
             return False
         else :
             
@@ -43,8 +41,6 @@ class Category:
                 i += 1
             return True
 
-
-
     def check_funds (self, amount) :
         # calculations for possibility of withdraw (enough money)
         if self.get_balance() < amount :
@@ -53,35 +49,79 @@ class Category:
         else :
             return True
 
+# ------ PRINTING OBJECT -------
+    def __str__(self):
+        final_str = ''
+
+        # ----- Category name
+        str_name = ''
+        cat_name_len = len(self.category)
+        str_name = ''
+        coef = int((30 - cat_name_len) / 2)
+      #  print(coef)
+        for x in range(coef) :
+            str_name += '*'
+        str_name += self.category
+        for x in range(coef) :
+            str_name += '*'
+        if coef % 2 != 0 :
+            str_name += '*'
+        else :
+            str_name += ''
+        str_name += '\n'
+        final_str += str_name 
+
+        # ------Ledger entries
+        for entries in self.ledger :
+            amount = entries['amount']
+            formated_amount = str("{:.2f}".format(amount))
+            cut_amount = formated_amount[:7]
+            description = entries['description']
+            spaces = ' ' * (23 - len(description) + (7 - len(cut_amount)) )
+            final_str += f'{description[:23]}{spaces}{cut_amount}\n'
+        
+        # ------Balance
+        formated_balance = "{:.2f}".format(self.get_balance())
+        final_str += f'Total: {formated_balance}'
+            
+        return final_str
+
 categories = []
 
 
 
 # TESTING :D
 bum = Category('Food')
-
-bum.deposit(10, 'alle')
-bum.deposit(20, 'kink')
+'''
+bum.deposit(2000, 'alle')
+#bum.deposit(20, 'kink')
 bum.withdraw(10, 'ales')
 
 bim = Category('Clothes')
 
-bim.deposit(50, 'krrr')
-bim.deposit(70, 'skk')
+bim.deposit(100, 'krrr')
+#bim.deposit(70, 'skk')
 bim.withdraw(40, 'ales')
 bim.transfer(20, 'Food')
 
 funnyStuff = Category('Funny stuff I like')
-funnyStuff.deposit(100, 'pocket')
+funnyStuff.deposit(300, 'pocket')
 funnyStuff.withdraw(50, 'supid')
 
 brum = Category('sweeeets')
 brum.deposit(60, 'mommy')
 brum.withdraw(30, 'candies')
-print(categories[0].ledger)
-print(categories[1].ledger)
+
+testowa = Category('1234567890123456789')
+testowa.deposit(200000000000, 'salary')
+testowa.withdraw(44.56, 'rent')
+testowa.transfer(16.44, 'sweeeets')
+#print(categories[0].ledger)
+#print(categories[1].ledger)
 
 #print(categories[0].ledger)
+'''
+
 
 def create_spend_chart(categories):
     class Expence :
@@ -103,17 +143,17 @@ def create_spend_chart(categories):
                 this_category_expences += category.ledger[i]['amount']
             i += 1
 
-        print(f'we spent {-this_category_expences} on {category_name}')
+      #  print(f'we spent {-this_category_expences} on {category_name}')
         expence = Expence(this_category_expences, category_name, 0)
 
-    print(expences[0].how_much, expences[1].how_much)    
+    #print(expences[0].how_much, expences[1].how_much)    
 
     total_spent = 0
     i = 0
     for a in expences :
         total_spent += expences[i].how_much
         i += 1
-    print('total spent', total_spent)
+ #   print('total spent', total_spent)
 
     j = 0
     for b in expences :
@@ -123,7 +163,7 @@ def create_spend_chart(categories):
 
 
     # ------ Printout -----
-    
+  #  print('Percentage spent by category')
     # ------ Print %%%% Table -----
 
     start_value = 100
@@ -139,7 +179,7 @@ def create_spend_chart(categories):
                 to_print += ' o '
             else :
                 to_print += '   '
-        print(f'{pref} {start_value}|{to_print}')
+        print(f'{pref}{start_value}|{to_print}')
         start_value -= 10
 
 
@@ -152,12 +192,12 @@ def create_spend_chart(categories):
     longest_cat = []
     for exp in expences :
         longest_cat.append(len(exp.on_what))
-    print('    ','-' * ((len(categories) * 3) + 1))
+    print('   ','-' * ((len(categories) * 3) + 1))
 
     i = 0
     while b < max(longest_cat): 
         
-        to_print = '      '
+        to_print = '     '
 
         for exp in expences :
             try :
@@ -169,10 +209,4 @@ def create_spend_chart(categories):
         i += 1
         b += 1
         
-
-
-
-
-
-
 create_spend_chart(categories)
